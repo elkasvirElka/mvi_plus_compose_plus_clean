@@ -1,10 +1,18 @@
 package com.example.mvi_plus_compose_plus_clean.data
 
-import com.example.mvi_plus_compose_plus_clean.ui.theme.Result
-
 data class MovieInfo(
-    val page: Int,
-    val results: List<Result>,
-    val total_pages: Int,
-    val total_results: Int
+    val adult: Boolean,
+    val backdrop_path: String,
+    val genre_ids: List<Int>,
+    val id: Int,
+    val original_language: String,
+    val original_title: String,
+    val overview: String,
+    val popularity: Double,
+    val poster_path: String,
+    val release_date: String,
+    val title: String,
+    val video: Boolean,
+    val vote_average: Double,
+    val vote_count: Int
 )
