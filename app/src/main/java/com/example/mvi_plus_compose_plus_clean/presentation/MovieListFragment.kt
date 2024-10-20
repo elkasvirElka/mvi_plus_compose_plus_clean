@@ -16,7 +16,8 @@ class MovieListFragment : Fragment(){
 
     //in case we need repository here (not the best idea, but this is how to do it)
     //private val repository by inject<MovieRepository>()
-    val viewModel by viewModel<MovieListViewModel>()
+    //if you use by activityViewModel you get shared ViewModel and only one instance for fragments in the same activity.
+    private val viewModel by viewModel<MovieListViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

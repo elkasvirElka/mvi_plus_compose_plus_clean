@@ -15,7 +15,6 @@ val appModule = module {
     }
     //or factory when you need different instances each time MovieRepository needed
     single<MovieRepository> { MovieRepositoryImpl(get()) }
-
     viewModel {
         MovieListViewModel(repository = get())
     }

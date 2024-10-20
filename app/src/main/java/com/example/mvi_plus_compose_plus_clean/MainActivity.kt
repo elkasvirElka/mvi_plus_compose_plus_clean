@@ -19,10 +19,19 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
 import com.example.mvi_plus_compose_plus_clean.presentation.MovieListFragment
 import com.example.mvi_plus_compose_plus_clean.ui.theme.Mvi_plus_compose_plus_cleanTheme
+import org.koin.android.ext.android.inject
+import org.koin.android.scope.AndroidScopeComponent
+import org.koin.androidx.scope.activityScope
+import org.koin.core.qualifier.named
+import org.koin.core.scope.Scope
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AndroidScopeComponent {
+    // activityRetainScope() is score of Activities viewModel, will survive when screen rotation happens
+    override val scope: Scope by activityScope()
+    private val hello by inject<String>(named("hello"))
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        print(hello)
         enableEdgeToEdge()
         setContent {
             Mvi_plus_compose_plus_cleanTheme {
