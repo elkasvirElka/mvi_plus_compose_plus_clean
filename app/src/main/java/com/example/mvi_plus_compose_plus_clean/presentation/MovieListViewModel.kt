@@ -38,9 +38,6 @@ class MovieListViewModel(private val repository: MovieRepository) : ViewModel() 
                 }
             }
         }
-        //call retrofit
-
-        // Load movies from repository
     }
 
    private fun loadMovieDetails(movieId: Int) {
