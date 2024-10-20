@@ -1,12 +1,15 @@
-package com.example.mvi_plus_compose_plus_clean
+package com.example.mvi_plus_compose_plus_clean.presentation
 
 import androidx.lifecycle.ViewModel
-import com.example.mvi_plus_compose_plus_clean.data.MovieInfo
+import androidx.lifecycle.viewModelScope
+import com.example.mvi_plus_compose_plus_clean.data.entity.MovieInfo
+import com.example.mvi_plus_compose_plus_clean.domain.MovieRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
-class MovieListViewModel : ViewModel() {
+class MovieListViewModel(private val repository: MovieRepository) : ViewModel() {
 
     private var _viewState = MutableStateFlow<MovieListState>(MovieListState.Loading)
 
@@ -20,14 +23,27 @@ class MovieListViewModel : ViewModel() {
         }
     }
 
-    fun loadMovies() {
+    private fun loadMovies() {
         _viewState.value = MovieListState.Loading
+        viewModelScope.launch {
+            repository.getMovies()?.let { response ->
+                when(response.code()) {
+                    200 -> {
+                        _viewState.value = MovieListState.Loaded(response.body()?.results)
+                    }
+
+                    else -> {
+                        _viewState.value = MovieListState.Error("Error loading movies")
+                    }
+                }
+            }
+        }
         //call retrofit
 
         // Load movies from repository
     }
 
-    fun loadMovieDetails(movieId: Int) {
+   private fun loadMovieDetails(movieId: Int) {
         // Load movie details from repository
     }
 }
@@ -39,6 +55,6 @@ sealed class MovieListEvent {
 
 sealed class MovieListState {
     object Loading : MovieListState()
-    data class Loaded(val movies: List<MovieInfo>) : MovieListState()
+    data class Loaded(val movies: List<MovieInfo>?) : MovieListState()
     data class Error(val message: String) : MovieListState()
 }

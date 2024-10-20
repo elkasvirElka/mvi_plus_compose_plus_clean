@@ -1,4 +1,6 @@
-package com.example.mvi_plus_compose_plus_clean.data
+package com.example.mvi_plus_compose_plus_clean.data.entity
+
+import java.io.Serializable
 
 data class MovieInfo(
     val adult: Boolean,
@@ -15,4 +17,4 @@ data class MovieInfo(
     val video: Boolean,
     val vote_average: Double,
     val vote_count: Int
-)
+): Serializable
