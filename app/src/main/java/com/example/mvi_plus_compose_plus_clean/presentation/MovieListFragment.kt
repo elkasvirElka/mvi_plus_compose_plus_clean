@@ -8,17 +8,15 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.example.mvi_plus_compose_plus_clean.data.MovieRepositoryImpl
-import com.example.mvi_plus_compose_plus_clean.data.framework.RetrofitInstance
-import com.example.mvi_plus_compose_plus_clean.data.service_api.MovieApi
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieListFragment : Fragment(){
-    private val moviesApi by lazy { RetrofitInstance.getRetrofitInstance().create(MovieApi::class.java) }
 
-    val viewModel by lazy { MovieListViewModel(repository = MovieRepositoryImpl(moviesApi)) }
+    //in case we need repository here (not the best idea, but this is how to do it)
+    //private val repository by inject<MovieRepository>()
+    val viewModel by viewModel<MovieListViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
